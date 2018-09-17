@@ -13,7 +13,7 @@ pdf:
 clean:
 	@/usr/local/bin/hr
 	@echo "Quitando archivos irrelevantes."
-	@rm -rf *.aux *.log *.fdb_latexmk  *.synctex.gz
+	@rm -rf *.aux *.log *.fdb_latexmk *.synctex.gz *.out *.bbl *.blg *.fls
 
 move:
 	@/usr/local/bin/hr
