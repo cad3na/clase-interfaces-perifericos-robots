@@ -4,7 +4,7 @@
 \documentclass{tufte-handout}
 %\documentclass[paper=letter, fontsize=11pt]{scrartcl} % Tamaño de papel y letra para el documento
 \usepackage{geometry}
-\geometry{left=1.5cm, right=7cm, top=2.5cm, bottom=2.5cm}
+\geometry{left=1.2cm, right=6.2cm, top=2.5cm, bottom=2.5cm}
 \usepackage{color}
 \usepackage[utf8]{inputenc} % Los caracteres acentuados se pueden escribir normalmente en el código
 \usepackage[T1]{fontenc} % Configuración de fuente de salida
@@ -13,7 +13,7 @@
 \usepackage[T1]{fontenc}
 \normalfont
 \usepackage{graphicx} % Paquetes para incluir imágenes
-
+\usepackage{multicol}
 \usepackage{circuitikz}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -23,6 +23,24 @@
 
 \usepackage{todonotes}
 \usepackage{microtype}
+\renewcommand{\figurename}{Figura}
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Código}
+\lstdefinestyle{mystyle}{
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
 
 % \usepackage{fancyhdr} % Paquete para personalizar pies y cabeceras de página
 % \pagestyle{fancyplain} % Todas las páginas con las mismas cabeceras y pies de página
