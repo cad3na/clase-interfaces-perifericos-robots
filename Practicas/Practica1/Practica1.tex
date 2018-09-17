@@ -17,7 +17,6 @@
 %-------------------------------------------------------------------------------
 
 \begin{document}
-
 \maketitle % Imprime el título
 
 %-------------------------------------------------------------------------------
@@ -26,7 +25,7 @@
 
 \section{Objetivos}
 
-	Familiarizarse con el equipo del laboratorio de electrónica y comprender el funcionamiento de circuitos eléctricos básicos.
+	Familiarizarse con el equipo del laboratorio de electrónica y comprender el funcionamiento del lenguaje de programación Wiring-Arduino.
 
 %-------------------------------------------------------------------------------
 %	CONOCIMIENTOS PREVIOS
@@ -36,63 +35,66 @@
 
 %-------------------------------------------------------------------------------
 
-	\subsection{Ley de Ohm}
+	\subsection{Lenguajes de programación para microcontroladores}
 
-		La ley de Ohm es la base de cualquier modelo para un sistema eléctrico, por lo tanto nos tomamos un momento para describirla.
+		Dentro del encuadre de esta materia se maneja como objetivo de conocimiento el utilizar lenguajes de programación para microcontroladores de alto nivel y de bajo nivel, por lo que resulta bastante conveniente utilizar un ambiente de desarrollo como el de Wiring-Arduino, el cual nos permite empezar a trabajar con un lenguaje de programación de alto nivel, facil de comprender y de dominar, aprendiendo los conceptos importantes del funcionamiento de un $\mu C$ (microcontrolador) y dejar para prácticas posteriores el uso de lenguajes de programación de bajo nivel, con la ventaja de poder utilizar el mismo $\mu C$ con las mismas herramientas de software.
 
-		\begin{equation}
-			V = I \cdot R
-		\end{equation}
+		Por el momento empecemos a revisar el ambiente de desarrollo de Arduino en la figura \ref{fig:arduino-ide}
 
-		Donde:
+		\begin{marginfigure}
+    	\begin{center}
+    		\includegraphics[width=\textwidth]{images/Arduino-IDE.png}
+    		\caption{IDE de Arduino}
+    		\label{fig:arduino-ide}
+    	\end{center}
+    \end{marginfigure}
+
+		En la parte superior de la ventana se puede encontrar los siguientes botones:
 
 		\begin{description}
-			\item[$V$] Voltaje - Piensa en tus aparatos electrodomésticos; estos están diseñados para funcionar con un voltaje de $120 V$, sin embargo en el laboratorio por lo general trabajaremos con $5 V$.
-			\item[$I$] Corriente - Mientras que todos tus aparatos electrodomésticos trabajan con el mismo voltaje, la corriente que utiliza cada uno será diferente (esto es lo que determina qué tanta energía gasta este aparato). Por ejemplo tu computadora puede gastar desde $2 A$ hasta $5 A$ mientras que un foco ahorrador puede utilizar $150 mA = 0.15 A$.
-			\item[$R$] Resistencia - Este parámetro es lo que une al voltaje con la corriente. En el ejemplo anterior, podemos imaginar que la computadora tiene una resistencia mucho mayor al foco.
+			\item[Verificar] - Este boton manda la orden de compilar el programa para asegurar que no haya errores de compilación.
+			\item[Subir] - Este boton manda la orden de compular el programa y envar el archivo binario para la escritura dentro de la memoria del $\mu C$.
+			\item[Nuevo] - Abre una nueva ventana del IDE con un archivo nuevo.
+			\item[Abrir] - Abre el navegador de archivos para escoger el archivo a abrir.
+			\item[Salvar] - Guarda el archivo de la ventana actual.
 		\end{description}
 
-		Lo que nos dice esta ley es que si tenemos un voltaje aplicado a una resistencia $V_1$, pasará a través de ella una corriente $I_1$ y tendrá el siguiente valor:
+		En la parte central de la ventana se encuentra el espacio para redactar el programa a ejecutar y la ventana de mensajes en donde se despliega el estado del compilador.
 
-		\begin{equation}
-			I_1 = \frac{V_1}{R_1}
-		\end{equation}
+		En el borde inferior derecho de la ventana se encuentra especificado el modelo de tarjeta de desarrollo a utilizar por el compilador y el puerto especifico en el que esta conectado. Esta información se puede modificar en el menu principal del IDE, en la opción de Herramientas.
 
-		Recordemos también que si un circuito está en serie, todos los elementos tienen la misma corriente, es decir:
+		Cuando se abre el IDE de Arduino por primera vez, se tiene el siguiente programa por default:
 
-		\begin{equation}
-			I_1 = I_2 = I_3 = ... = I_T
-		\end{equation}
+		\lstinputlisting[language=C]{codigos/inicio.ino}
 
-		Y que el voltaje total en un circuito en serie será la suma de todos los voltajes:
+		En donde podemos ver dos bloques principales para nuestra programación:
 
-		\begin{equation}
-			V_1 + V_2 + V_3 + ... = V_T
-		\end{equation}
+		\begin{description}
+			\item[setup] - En este función existen las indicaciones para inicializar el $\mu C$, es decir las instrucciones que se ejecutarán en el $\mu C$ solo una vez (cuando el $\mu C$ inicia su operación).
+			\item[loop] - En este función existen las instrucciones que se ejecutarán una y otra vez mientras el $\mu C$ este funcionando.
+		\end{description}
 
-		De manera contraria, cuando tenemos un circuito en paralelo, las corrientes a través de cada uno de los elementos en paralelo se suma para obtener un total, y el voltaje en cada uno de estos elementos es el mismo
+		Podemos ver un ejemplo de programación en Arduino directamente en los ejemplos del software (en el menu principal, Archivo, Ejemplos, 01.Basics, Blink):
 
-		\begin{equation}
-			I_1 + I_2 + I_3 + ... = I_T
-		\end{equation}
+		\lstinputlisting[language=C]{codigos/Blink.ino}
 
-		\begin{equation}
-			V_1 = V_2 = V_3 = ... = V_T
-		\end{equation}
+		En las lineas 1 - 23 se tiene un comentario de multiples lineas, en la linea 25 se tiene un comentario de una sola linea.
 
-		La resistencia es diferente, cuando tenemos un circuito en serie, podemos sumar los valores de todas las resistencias para calcular la resistencia total:
+		En la linea 28, adentro de la función setup, se tiene la inicialización de un pin del puerto de salida de la tarjeta de desarrollo, en donde se configura el pin LED\_BUILTIN, como un pin de salida, es decir, se configura de tal manera que el pin pueda cambiar el voltaje de acuerdo a la programación a continuación\footnote{Lo contrario sería configurar el pin como entrada, lo cual dejaría al programa sin la capacidad de modificar el voltaje en este, pero con la capacidad de leer un voltaje causado por una fuente externa.}.
 
-		\begin{equation}
-			R_1 + R_2 + R_3 + ... = R_T
-		\end{equation}
+		En la linea 33, adentro de la funcion loop, se cambia el estado del pin LED\_BUILTIN a alto, lo que hará que el pin físico del $\mu C$ asociado a LED\_BUILTIN\footnote{En las lineas iniciales de comentarios se describe a LED\_BUILTIN como el pin 13 para las tarjetas de desarrollo más comúnes de Arduino, por lo que si se reemplaza LED\_BUILTIN con 13, el funcionamiento de este programa será el mismo.} tenga un voltaje de $5V$, en la linea 34 se llama a la función delay con un argumento de $1000$, la cual hará que el $\mu C$ espere $1000 ms$ o bien $1s$, en la linea 35 se cambia el estado del pin LED\_BUILTIN a bajo, con lo que el pin físico del $\mu C$ asociado a LED\_BUILTIN tenga un voltaje de $0V$ y en la linea 36 se llama a la función delay para esperar $1s$.
 
-		Mientras que en paralelo las resistencias no se suman tan simplemente:
+		El resultado final de este programa será que el $\mu C$ encenderá y apagará el LED instalado en la misma placa de desarrollo con intervalos de $1s$.
 
-		\begin{equation}
-			\frac{1}{\frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + ...} = R_T
-		\end{equation}
+		En el siguiente ejemplo se describe como leer el voltaje del pin $A0$ y utilizar este valor para encender y apagar un LED con intervalos basados en este valor.
+		\lstinputlisting[language=C]{codigos/AnalogInput.ino}
 
-		A lo largo de la práctica se te pedirá que midas y calcules diferentes valores relacionados con la Ley de Ohm. Asegúrate de analizar primero si el circuito está en serie o en paralelo.
+		En el siguiente ejemplo se decribe como encender un LED con una intensidad visual que sube y baja.
+		\lstinputlisting[language=C]{codigos/Fading.ino}
+
+		Por el momento estos son todos los ejemplos que se van aanalizar, sin embargo tienes la libertad de revisar los ejemplos incluidos dentro del IDE de Arduino para aprender diferentes funciones.
+
+		%\newpage
 
 %-------------------------------------------------------------------------------
 %	EQUIPO
@@ -104,7 +106,7 @@
 
 	\begin{itemize}
 		\item Fuente de Alimentación
-		\item Multímetro
+		\item Osciloscopio
 		\item Cables de alimentación
 		\item Pinzas
 	\end{itemize}
@@ -120,9 +122,9 @@
 		\item LED (no importa el color, aunque los difusos son más fáciles de ver en las condiciones de iluminación del laboratorio)
 		\item Resistencias
 		\begin{itemize}
+			\item $120 \Omega$
+			\item $180 \Omega$
 			\item $220 \Omega$
-			\item $330 \Omega$
-			\item $1 k\Omega$
 		\end{itemize}
 		\item Cables
 	\end{itemize}
@@ -133,69 +135,43 @@
 
 \section{Desarrollo}
 
-    Lo primero que tenemos que hacer es realizar el circuito eléctrico en el protoboard. El circuito lo podemos ver en la figura \ref{dia:elecir}. \\
+		\begin{figure}[h]
+			\begin{center}
+				\includegraphics[width=0.7\textwidth]{images/1-LED-A0_sch.pdf}
+				\caption{Diagrama esquemático del circuito a ensamblar.}
+				\label{dia:anal-uno-sch}
+			\end{center}
+		\end{figure}
 
-    \begin{figure}[h]
+		\begin{marginfigure}
+			\begin{center}
+				\includegraphics[width=\textwidth]{images/1-LED-A0_bb.pdf}
+				\caption{Diagrama representativo del circuito a ensamblar.}
+				\label{dia:anal-uno}
+			\end{center}
+		\end{marginfigure}
+
+    Lo primero que tenemos que hacer es realizar el circuito eléctrico en el protoboard. El circuito lo podemos ver en la figura \ref{dia:anal-uno}; este equema es una representación pictográfica bastante realista del circuito a realizar, sin embargo, en ocasiones puede resultar demasiada información redundante, sobre todo cuando ya se tiene experiencia realizando circuitos eléctricos, por lo que tambien podemos verlo como en la figura \ref{dia:anal-uno-sch} y obtener la misma información.
+
+		\begin{figure}[h]
     	\begin{center}
-    		\includegraphics[width=0.3\textwidth]{images/LED-bateria-diagrama.png}
-    		\caption{Diagrama eléctrico del circuito a ensamblar.}
-    		\label{dia:elecir}
+    		\includegraphics[width=0.7\textwidth]{images/1-LED-A0-nano_sch.pdf}
+    		\caption{Diagrama esquemático alternativo del circuito a ensamblar.}
+    		\label{dia:anal-nano-sch}
     	\end{center}
     \end{figure}
 
-    Este diagrama eléctrico lo único que nos dice es que tenemos que conectar la parte positiva de nuestra batería al ánodo de nuestro LED, y el cátodo del LED, a una terminal de la resistencia. Después conectamos la otra terminal de la resistencia a la parte negativa de la batería y habremos terminado con nuestro circuito eléctrico. \\
-
-    Pero esto aún no nos da la suficiente información para hacerlo en nuestro protoboard. Esto lo podemos ver en la figura \ref{dia:cir}. \\
-
-    \begin{figure}[h]
+		\begin{marginfigure}
     	\begin{center}
-    		\includegraphics[width=0.5\textwidth]{images/LED-bateria.png}
-    		\caption{Diagrama del circuito a ensamblar.}
-    		\label{dia:cir}
+    		\includegraphics[width=\textwidth]{images/1-LED-A0-nano_bb.pdf}
+    		\caption{Diagrama representativo alternativo del circuito a ensamblar.}
+    		\label{dia:anal-nano}
     	\end{center}
-    \end{figure}
+    \end{marginfigure}
 
-    El protoboard tiene conexiones internas, que aprovechamos para hacer nuestro circuito. Primero que nada nuestro protoboard está dividido en varias partes. La parte central tiene conexiones horizontales, y las secciones laterales tienen conexiones verticales. Una práctica común es conectar el voltaje positivo de alimentación en la columna marcada de rojo en las secciones laterales y el voltaje negativo (o de referencia) en la columna marcada con azul, así siempre tenemos a la mano la alimentación en un circuito complejo (Ver la figura \ref{dia:proto}). \\
+		Si bien la manera mas facil y simple de seguir estas prácticas es con un Arduino UNO, tambien se puede utilizar cualquier otra tarjeta de desarrollo que utilice Wiring-Arduino, por lo que ponemos también un ejemplo con la tarjeta de desarrollo Arduino NANO en la figura \ref{dia:anal-nano}, así como su diagrama esquemático correspondiente en la figura \ref{dia:anal-nano-sch}.
 
-    \begin{figure}[h]
-    	\begin{center}
-    		\includegraphics[width=0.25\textwidth]{images/protoboard.png}
-    		\caption{Protoboard.}
-    		\label{dia:proto}
-    	\end{center}
-    \end{figure}
-
-    Una vez que tenemos nuestro circuito eléctrico ensamblado, podemos conectarlo a nuestra fuente de alimentación. En caso de que tengas un par de baterías AA con una manera de conectarlas, puedes hacerlo de la manera en que viene indicado en la figura \ref{dia:cir}, pero si no la has conseguido aún, no hay problema. Podemos usar la fuente de alimentación del laboratorio. \\
-
-    Para usar la fuente de alimentación del laboratorio tenemos que asegurarnos de que esté configurada con el voltaje que queremos y que la estés conectando de la manera correcta. Por lo que te sugiero que pongas atención en la explicación que se hará en el momento de la práctica. \\
-
-    \begin{figure}[h]
-    	\begin{center}
-    		\includegraphics[width=0.5\textwidth]{images/LED-bateria-resistencias.png}
-    		\caption{Diagrama del circuito eléctrico con resistencias en serie.}
-    		\label{dia:serie}
-    	\end{center}
-    \end{figure}
-
-    Conectado nuestro sistema a una fuente de alimentación, procederemos a medir el voltaje en la resistencia con la ayuda del multímetro. Para poder medir voltaje tenemos que configurar nuestro multímetro como Vóltmetro (esto también se explicará en la práctica). Realizamos la conexión de nuestro multímetro con las terminales de la resistencia, y en el display del multímetro estará marcado el voltaje que se aplica a la resistencia. \\
-
-    En la figura \ref{dia:cir} se muestra una resistencia de $220 \Omega$, en la que medirás el voltaje, y calcularás la corriente; registrando cada uno de estos valores en la hoja de anotaciones que se encuentra al final de esta práctica. \\
-
-    \begin{figure}[h]
-    	\begin{center}
-    		\includegraphics[width=0.5\textwidth]{images/LED-bateria-resistencias-paralelo.png}
-    		\caption{Diagrama del circuito eléctrico con resistencias en paralelo.}
-    		\label{dia:paralelo}
-    	\end{center}
-    \end{figure}
-
-    En la segunda tabla deberás medir el voltaje aplicado en el LED, con cada una de las resistencias que has hecho el circuito. También deberás calcular la resistencia, tomando en cuenta que la corriente es la misma en la resistencia y en el LED cuando están conectadas en serie. \\
-
-    Al terminar esta parte, tendrás que conectar en serie las tres resistencias en serie como se muestra en la figura \ref{dia:serie}. Después las conectarás en paralelo como en la figura \ref{dia:paralelo}. \\
-
-    En la tercera tabla deberás calcular la resistencia total que se crea cuando conectas las tres resistencias en serie, y en paralelo. Medirás el voltaje y calcularás la corriente que pasa a través de tu circuito.
-
-    Diviértete, y no dudes en preguntar al profesor cualquier duda que surja en el momento de la práctica. \\
+		Nota que los diagramas especifican el cable de conexion al arduino en $A0$, sin embargo, de acuerdo a los ejemplos es necesario conectar el LED en diferentes pines del Arduino y en algunos casos multiples LED.
 
 %-------------------------------------------------------------------------------
 %	CONCLUSIONES
@@ -210,62 +186,28 @@
 
 \clearpage
 \section{Hoja de Anotaciones}
-	Anota los pasos a seguir para utilizar correctamente la fuente de alimentación. \\% \\ \\ \\ \\ \\ \\
 
-	Anota los pasos a seguir para utilizar correctamente el multímetro como Vóltmetro. \\% \\ \\ \\
+	Anota los pasos a seguir para utilizar correctamente la fuente de alimentación. \\ \vspace{3cm}% \\ \\ \\ \\ \\ \\
 
-	Realiza las mediciones de voltaje y calcula la corriente para la resistencia en el circuito:
+	Anota los pasos a seguir para utilizar correctamente el multímetro como Vóltmetro. \\ \vspace{3cm}% \\ \\ \\
 
-	\begin{center}
-		\begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
-			\hline
-			$V$ & $I$ & $R$          \\
-			\hline
-			    &     & $220 \Omega$ \\
-			\hline
-			    &     & $330 \Omega$ \\
-			\hline
-			    &     & $1 k \Omega$ \\
-			\hline
-		\end{tabular}
-	\end{center}
+	Carga el ejemplo del IDE de Arduino ubicado en Menu principal, Archivo, Ejemplos, 03. Analog, Fading y modifica el diagrama esquemático de la figura \ref{dia:anal-uno-sch} para que el ejemplo funcione. \\ \vspace{5cm}
 
-	Realiza las mediciones de voltaje y calcula la resistencia del LED en el circuito (toma en cuenta que la corriente en el LED, es la misma que en la resistencia, debido a que están conectadas en serie):
+	Diseña un circuito eléctrico en el cual 3 LEDs esten conectados a 3 pines del Arduino y se enciendan cuando estos pines del Arduino tengan un voltaje de $5V$. \\ \vspace{5cm}
 
-	\begin{center}
-		\begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
-			\hline
-			$V$ & $I$ & $R$ \\
-			\hline
-			    &     &     \\
-			\hline
-			    &     &     \\
-			\hline
-			    &     &     \\
-			\hline
-		\end{tabular}
-	\end{center}
+	Diseña un programa de Arduino que prenda secuencialmente los 3 LEDs dejandolos encendidos $1s$, $1s$, y $2s$
 
-	Realiza las mediciones de voltaje y calcula la resistencia total de los circuitos en serie y en paralelo de resistencias. Calcula la corriente que pasa por el LED:
+	\begin{multicols}{2}
+		Integrantes del equipo: \\[0.4cm]
+		\horrule{0.5pt} \\[0.4cm] % Linea horizontal delgada
+		\horrule{0.5pt} % Linea horizontal delgada
 
-	\begin{center}
-		\begin{tabular}{|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
-			\hline
-			         & $V$ & $I$ & $R$ \\
-			\hline
-			Serie    &     &     &     \\
-			\hline
-			Paralelo &     &     &     \\
-			\hline
-		\end{tabular}
-	\end{center}
+		Revisó: \\[1.25cm]
+		\horrule{0.5pt} \\% Linea horizontal delgada
+	\end{multicols}
 
-	Integrantes del equipo: \\[0.2cm]
-	\horrule{0.5pt} \\[0.2cm] % Linea horizontal delgada
-	\horrule{0.5pt} % Linea horizontal delgada
 
-	Revisó: \\[0.2cm]
-	\horrule{0.5pt} \\% Linea horizontal delgada
+
 
 %-------------------------------------------------------------------------------
 %	FIN DEL DOCUMENTO
