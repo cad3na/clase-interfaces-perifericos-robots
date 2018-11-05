@@ -10,19 +10,27 @@
 \usepackage[T1]{fontenc} % Configuración de fuente de salida
 \usepackage{cmbright}
 \usepackage[sfdefault]{noto}
+\usepackage[ttdefault=true]{AnonymousPro}
 \usepackage[T1]{fontenc}
 \normalfont
 \usepackage{graphicx} % Paquetes para incluir imágenes
 \usepackage{multicol}
-\usepackage{circuitikz}
+%\usepackage{circuitikz}
 \usepackage{amsmath}
 \usepackage{mathtools}
+
+\usepackage[american]{circuitikz}
+\usepackage{tikz-timing}
+\usetikzlibrary{decorations.pathreplacing}
 \usepackage{tikz}
-\usetikzlibrary{arrows}
+\usepackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{arrows, positioning}
+\usepackage{tkz-euclide}
 
 \usepackage{sectsty} % Paquete para configuración de secciones
 \allsectionsfont{\centering \normalfont \scshape} % Los títulos de las secciones son centrados, con la misma fuente y pequeñas mayúsculas
 
+\usetikztiminglibrary{nicetabs}
 \usepackage{todonotes}
 \usepackage{microtype}
 \renewcommand{\figurename}{Figura}
@@ -30,7 +38,7 @@
 \usepackage{listings}
 \renewcommand{\lstlistingname}{Código}
 \lstdefinestyle{mystyle}{
-    basicstyle=\footnotesize,
+    basicstyle=\footnotesize\ttfamily,
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
