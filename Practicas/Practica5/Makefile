@@ -1,4 +1,4 @@
-TARGET=Practica4
+TARGET=Practica5
 OUTDIR=../PDF's/
 
 all: pdf clean move
