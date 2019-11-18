@@ -26,25 +26,15 @@
 %-------------------------------------------------------------------------------
 	\subsection{Controladores}
 
-		%\begin{marginfigure}
-		%	\begin{center}
-		%		\includegraphics[width=\textwidth]{images/PWM_fade.png}
-		%		\caption{PWM variante con el tiempo}
-		%		\label{fig:PWM_fade}
-		%	\end{center}
-		%\end{marginfigure}
+		\begin{marginfigure}
+			\begin{center}
+				\includegraphics[width=0.6\textwidth]{images/servo.pdf}
+				\caption{Explosion de un servomotor comercial}
+				\label{fig:servomotor}
+			\end{center}
+		\end{marginfigure}
 
-		%\begin{figure}
-		%	\begin{center}
-		%		\includegraphics[width=0.8\textwidth]{images/Arduino-L293D-CD.pdf}
-		%		\caption{Conexion Arduino - L293D - Motor CD}
-		%		\label{fig:motor_arduino}
-		%	\end{center}
-		%\end{figure}
-
-		%\lstinputlisting[language=C]{codigos/dc_motor_vel.ino}
-
-		En esta práctica utilizaremos primero el servomotor de la manera en que el fabricante esperaba que lo usaramos, despues lo modificaremos de tal manera en que podamos controlarlo completamente desde el Arduino.
+		En esta práctica utilizaremos primero el servomotor, como el de la figura \ref{fig:servomotor}, de la manera en que el fabricante esperaba que lo usaramos, despues lo modificaremos de tal manera en que podamos controlarlo completamente desde el Arduino.
 
 		En primer lugar debemos saber como funciona normalmente; para esto lo conectaremos de acuerdo a las instrucciones del fabricante, tomando cuidado de conectar el cable de señal al pin 13 de la tarjeta de desarrollo Arduino, para darle la señal de control por medio de este.
 
@@ -94,9 +84,14 @@
 
 		\textbf{¡Peligro!} - A partir de este punto se harán modificaciones importantes al servomotor las cuales harán dificil el volver a resolver los puntos anteriores, por lo que es importante que hayas terminado las primeras dos tablas y hayas validado tu trabajo con el profesor, antes de empezar a trabajar en esta sección de la práctica.
 
-		Una vez que hemos caracterizado el desempeño de nuestro servomotor, podemos seguir adelante a el diseño de un controlador por medio de la tarjeta de desarrollo Arduino, para esto necesitaremos abrir la parte posterior del servomotor, retirar el controlador actual, desoldando o cortando los cables que entran a este y añadiendo longitud a los cables, los cuales deben ser, dos conductores del motor CD y tres conductores del potenciometro; una vez que estos cables han sido alargados, se puede cerrar el servomotor de nuevo.
+		Una vez que hemos caracterizado el desempeño de nuestro servomotor, podemos seguir adelante con el diseño de un controlador por medio de la tarjeta de desarrollo Arduino, para esto necesitaremos abrir la parte inferior del servomotor: debes tener cuidado con no abrir el compartimiento de la transmisión de engranes, o bien tratarlos con el suficiente cuidado. Como se ve en la figura \ref{fig:servomotor}, la transmisión de engranes identificada con la etiqueta (C), esta acoplada al motor DC (A) y al potenciometro (B) a través de una carcasa plástica la cual esta fija con la tapa inferior y la tapa superior (D) por medio de tornillos, estos deben ser removidos para acceder a las conexiones en la tapa inferior, pero a su vez pueden aflojar la conexion de la tapa superior; mas aún si la transmisión es desarmada, es facil volver a armarla, pero comúnmente estara cubierta de grasa de litio (sustancia blanca y viscosa), por lo que te mancharas las manos y probablemente la ropa si es que no tienes cuidado. Muchas veces ayuda comectar el eslabon de salida (E) a la tranmisión para evitar que la transmisión tenga juego y se desensamble en el proceso de abrir la tapa inferior del servomotor.
+
+		Una vez que tengas el servomotor abierto deberás retirar el controlador actual, desoldando o cortando los cables que entran a este y añadiendo longitud a los cables, los cuales deben ser, dos conductores del motor CD y tres conductores del potenciometro. Una vez que estos cables han sido alargados, se puede cerrar el servomotor de nuevo.
 
 		Los dos conductores del motor CD deben ser conectados al circuito de potencia adquirido (L293D o L298N), las señales de control para este circuito vendrán del Arduino y estaran marcadas como \texttt{m1} y \texttt{m2}. Los tres conductores del potenciometro serán conectados a $0V$, $5V$ y al pin marcado como \texttt{pot\_pin} en el código; de tal manera que el Arduino detecte un voltaje en este pin entre $0V$ y $5V$ dependiendo de la posición del servomotor.
+
+		Esta parte de la práctica es tardada y delicada por lo que la recomendación general es que se haga en casa, con tiempo suficiente para corregir errores que pudieran suceder, previamente se deben tomar recomendaciones del profesor dependiendo del tipo de servomotor que se adquirió para esta práctica.
+		\newpage
 
 		Una vez con nuestro circuito conectado, es momento de probar el primer código:
 
@@ -140,6 +135,7 @@
 		Si jugamos con el sistema asi, podemos enviar la posicion de refencia por medio del monitor serial, tambien podemos modificar la ganancia \texttt{kp}, de tal manera en que el sistema sea mas rapido o lento, estable o criticamente estable, subamortiguado o sobreamortiguado.
 
 		En este punto deberás llenar la tercer tabla, sintonizando el controlador $k_p$ para obtener el menor tiempo posible en mover el motor de la posición $0^o$ a $180^o$ o bisceversa.
+		\newpage
 
 		\subsection{Control PD}
 
@@ -152,7 +148,7 @@
 		\end{fullwidth}
 
 		En este punto deberás llenar la tabla cuatro, la cual te ayudará a sintonizar el controlador PD utilizando el mismo procedimiento de la anterior.
-		%\newpage
+		\newpage
 
 %-------------------------------------------------------------------------------
 %	EQUIPO
